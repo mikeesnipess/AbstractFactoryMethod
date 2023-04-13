@@ -4,6 +4,7 @@ using AbstractFactoryMethod.ServiceCars;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -29,32 +30,17 @@ namespace AbstractFactoryMethod.Menu
 
                int choice = int.Parse(Console.ReadLine());
 
+               IFactory factory = null;
+               Car transport = null;
+               CarSalon carSalon = null;
+
                if (choice == 1)
                {
-                    FormulaFactory formula = new FormulaFactory();
-                    Car car = CreateCar(formula.CreateCar());
-                    CarSalon carSalon = CarSalonView(formula.ViewSalon());
-
-                    Console.Clear();
-                    Console.WriteLine("\n\n\n\t\t\t\tCONGRATULATIONS!");
-                    Console.WriteLine($"\n\nYour order:" +
-                         $"\n{formula.CreateCar().Create(car.Name, car.Color)}" +
-                         $"\n{formula.ViewSalon().Receive(carSalon.Location)}" +
-                         $"\nOrder will be done: {formattedDate}");
-
+                    factory = new FormulaFactory();
                }
                else if (choice == 2)
                {
-                    TruckFactory truck = new TruckFactory();
-                    Car car = CreateCar(truck.CreateCar());
-                    CarSalon carSalon = CarSalonView(truck.ViewSalon());
-
-                    Console.Clear();
-                    Console.WriteLine("\n\n\n\t\t\t\tCONGRATULATIONS!");
-                    Console.WriteLine($"\n\nYour order:" +
-                         $"\n{truck.CreateCar().Create(car.Name, car.Color)}" +
-                         $"\n{truck.ViewSalon().Receive(carSalon.Location)}" +
-                         $"\nOrder will be done: {formattedDate}");
+                    factory = new TruckFactory();
                }
                else
                {
@@ -62,6 +48,17 @@ namespace AbstractFactoryMethod.Menu
                     Console.ReadLine();
                     MainMenu();
                }
+
+               transport = CreateCar(factory.CreateCar());
+               carSalon = CarSalonView(factory.ViewSalon());
+               Console.Clear();
+               Console.WriteLine("\n\n\n\t\t\t\tCONGRATULATIONS!");
+               Console.WriteLine($"\n\nYour order:" +
+               $"\n{transport.GetInfo()}" +
+                    $"\n{factory.ViewSalon().Receive(carSalon.Location)}" +
+                    $"\nOrder will be done: {formattedDate}");
+
+
 
           }
 
@@ -107,9 +104,7 @@ namespace AbstractFactoryMethod.Menu
                string color = Console.ReadLine();
                car.Color = color;
 
-               car.Create(name, color);
                return car;
-
           }
      }
 }

@@ -8,9 +8,9 @@ namespace AbstractFactoryMethod.Cars
 {
     public class Truck : Car
     {
-        public override string Create(string name,string color)
+          public override string GetInfo()
         {
-               string str = $"The truck will be {name} model and {color} color!";
+               string str = $"The truck will be {Name} model and {Color} color!";
                return str ;
           }
     }

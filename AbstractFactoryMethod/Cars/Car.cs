@@ -9,8 +9,8 @@ namespace AbstractFactoryMethod.Cars
      public abstract class Car
      {
           public string Name { get; set; }
-          public string Color { get; set; }  
+          public string Color { get; set; }
 
-          public abstract string Create(string name, string color);
+          public abstract string GetInfo();
      }
 }
